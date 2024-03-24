@@ -1,0 +1,6 @@
+11. Considere el siguiente problema: Se quiere modelar el transporte público de la ciudad de La
+Plata, lo cual involucra las líneas de colectivos y sus respectivas paradas. Cada línea de
+colectivos tiene asignado un conjunto de paradas donde se detiene de manera repetida
+durante un mismo día. De acuerdo a las estructuras de datos vistas en esta práctica, que
+estructura de datos sugeriría para el modelado de las paradas de una línea de colectivos?
+Para el modelado de las paradas de una línea de colectivos la estructura ideal sugerida sería la de "CircularQueue", o sea una cola circular, ya que permite mantener un orden de llegada y partida, de acuerdo a los horarios del colectivo.

@@ -1,3 +1,12 @@
+/* 4. Pasaje de parámetros en Java
+a. Sin ejecutar el programa en su computadora, sólo analizándolo, indique qué imprime el
+siguiente código.
+b. Ejecute el ejercicio en su computadora, y compare su resultado con lo esperado en el
+inciso anterior.
+c. Inserte un breakpoint en las líneas donde se indica: y = tmp y ejecute en modo debug
+¿los valores que adoptan las variables x, y coinciden con los valores impresos por
+consola? */
+
 package Practica1.Ejercicio4;
 
 public class SwapValores {
