@@ -14,7 +14,7 @@ hijos.
 dicho hijo el árbol receptor del mensaje.
 a) Analice la implementación en JAVA de la clase BinaryTree brindada por la cátedra. */
 
-package Practica2.Ejercicio1;
+package Practica2.Ejercicio1y2;
 
 import java.util.*;
 
@@ -24,15 +24,12 @@ public class BinaryTree <T> {
     private BinaryTree<T> leftChild;   
     private BinaryTree<T> rightChild; 
 
-
     public BinaryTree() {
         super();
     }
 
     public BinaryTree(T data) {
         this.data = data;
-        this.leftChild = null;
-        this.rightChild = null;
     }
 
     public T getData() {
@@ -47,22 +44,14 @@ public class BinaryTree <T> {
      * @return
      */
     public BinaryTree<T> getLeftChild() {
-        if(hasLeftChild()) {
-            return leftChild;
-        } else {
-            throw new NoSuchElementException("No existe un hijo izquierdo");
-        }
+        return leftChild;
     }
     /**
      * Preguntar antes de invocar si hasRightChild()
      * @return
      */
     public BinaryTree<T> getRightChild() {
-        if(hasRightChild()) {
-            return leftChild;
-        } else {
-            throw new NoSuchElementException("No existe un hijo derecho");
-        }
+        return rightChild;
     }
 
     public void addLeftChild(BinaryTree<T> child) {
@@ -108,38 +97,81 @@ b) espejo(): BinaryTree<T> Devuelve el árbol binario espejo del árbol receptor
 c) entreNiveles(int n, m) Imprime el recorrido por niveles de los elementos del árbol
 receptor entre los niveles n y m (ambos inclusive). (0≤n<m≤altura del árbol) */    
     
-    public  int contarHojas() {
-        return contarHojasRecursivo(this);
-    }    
-    
-    private int contarHojasRecursivo(BinaryTree<T> nodo) {
-        if(nodo == null) {
-            return 0; //No hay hojas
-        } else if (isLeaf()) {
-            return 1; //Es una hoja
-        } else {
-            return contarHojasRecursivo(nodo.leftChild) + contarHojasRecursivo(nodo.rightChild);
+    public int contarHojas() {
+        int leftC =0; 
+        int rightC = 0;
+        if (this.isEmpty()) return 0;
+        else if(this.isLeaf()) return 1;
+        else {
+            if(this.hasLeftChild()) 
+                leftC = this.getLeftChild().contarHojas();
+            if(this.hasRightChild()) 
+                rightC = this.getRightChild().contarHojas();
+            return leftC + rightC;
         }
-    }		
+    }	
     	 
     public BinaryTree<T> espejo(){
-        return espejoRecursivo(this);
+        BinaryTree<T> arbEspejo = new BinaryTree<T>(this.getData());
+        if(this.hasLeftChild()) {
+            arbEspejo.addRightChild(this.getLeftChild().espejo());
+        }
+        if(this.hasRightChild()) {
+            arbEspejo.addLeftChild(this.getRightChild().espejo());
+        }
+        return arbEspejo;
     }
     
-    private BinaryTree<T> espejoRecursivo(BinaryTree<T> nodo) {
-        if(nodo == null) {
-            return null;
-        }
-        BinaryTree<T> nodoEspejo = new BinaryTree<T>(nodo.data);
-        nodoEspejo.leftChild = espejoRecursivo(nodo.rightChild);
-        nodoEspejo.rightChild = espejoRecursivo(nodo.leftChild);
-        return nodoEspejo;
+    public void entreNiveles(int n, int m) {
+        if (this.isEmpty() || n < 0 || m < n) return; 
+        Queue<BinaryTree<T>> cola = new LinkedList();
+        cola.add(this);
+        int nivelActual = 0;
+        
+        while(!cola.isEmpty()) {
+            int nodoNivel = cola.size();
+            if(nivelActual >=n && nivelActual <= m) {
+                for(int i=0; i < nodoNivel; i++) {
+                    BinaryTree<T> nodo = cola.remove();
+                    System.out.print(nodo.getData() + " ");
+                    if(nodo.hasLeftChild()) cola.add(nodo.getLeftChild());
+                    if(nodo.hasRightChild()) cola.add(nodo.getRightChild());
+                }
+            } else {
+                for(int i=0; i < nodoNivel; i++) {
+                    cola.remove();
+                }
+            }
+            nivelActual++;
         }
     }
-
-    // 0<=n<=m
-    public void entreNiveles(int n, int m){
-
+    
+    public void imprimirArbol() {
+        if(this.hasLeftChild()) this.getLeftChild().imprimirArbol();
+        System.out.print(this.getData() + " ");
+        if(this.hasRightChild()) this.getRightChild().imprimirArbol();
     }
+    
+    public static void main (String[] args) {
+        System.out.println("Test metodos Arboles");
+        BinaryTree<Integer> ab = new BinaryTree<Integer>(4);
+        ab.addLeftChild(new BinaryTree<Integer>(2));
+        ab.addRightChild(new BinaryTree<Integer>(6));
+        ab.getLeftChild().addLeftChild(new BinaryTree<Integer>(1));
+        ab.getLeftChild().addRightChild(new BinaryTree<Integer>(3));
+        ab.getRightChild().addLeftChild(new BinaryTree<Integer>(5));
+        //ab.getRightChild().addRightChild(new BinaryTree<Integer>(8));
+        
+        System.out.println(ab.contarHojas());
+        System.out.println("Arbol original: ");
+        ab.imprimirArbol();
+        System.out.println("Arbol espejo: ");
+        BinaryTree<Integer> abEspejo = ab.espejo();
+        abEspejo.imprimirArbol();
+        System.out.println("Impresion Arbol por niveles 0 y 1");
+        ab.entreNiveles(0, 2);
+    }
+    
 }
+
 
