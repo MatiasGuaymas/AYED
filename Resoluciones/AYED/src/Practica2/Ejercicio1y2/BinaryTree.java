@@ -133,7 +133,7 @@ receptor entre los niveles n y m (ambos inclusive). (0≤n<m≤altura del árbol
             if(nivelActual >=n && nivelActual <= m) {
                 for(int i=0; i < nodoNivel; i++) {
                     BinaryTree<T> nodo = cola.remove();
-                    System.out.print(nodo.getData() + " ");
+                    System.out.print(nodo.getData() + " | ");
                     if(nodo.hasLeftChild()) cola.add(nodo.getLeftChild());
                     if(nodo.hasRightChild()) cola.add(nodo.getRightChild());
                 }
@@ -173,5 +173,3 @@ receptor entre los niveles n y m (ambos inclusive). (0≤n<m≤altura del árbol
     }
     
 }
-
-
