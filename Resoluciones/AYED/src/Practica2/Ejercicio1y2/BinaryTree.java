@@ -143,6 +143,7 @@ receptor entre los niveles n y m (ambos inclusive). (0≤n<m≤altura del árbol
                 }
             }
             nivelActual++;
+            System.out.println("");
         }
     }
     

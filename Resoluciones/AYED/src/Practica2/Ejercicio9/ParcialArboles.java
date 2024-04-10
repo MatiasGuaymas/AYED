@@ -4,12 +4,11 @@ import Practica2.Ejercicio1y2.BinaryTree;
 
 public class ParcialArboles {
     public BinaryTree<SumDif> sumAndDif(BinaryTree<Integer> arbol) {
-        if(arbol.isEmpty()) return null;
-        else {
-            BinaryTree<SumDif> arbSad = new BinaryTree<SumDif>();
+        BinaryTree<SumDif> arbSad = new BinaryTree<SumDif>();
+        if(!arbol.isEmpty()) {
             this.sumAndDif(arbol, arbSad, 0, 0);
-            return arbSad;
         }
+        return arbSad;
     }
     
     private void sumAndDif(BinaryTree<Integer> arbol, BinaryTree<SumDif> arbSad, int sum, int padre) {
