@@ -14,7 +14,7 @@ El método isEmpty() devuelve verdadero si el dato del árbol es null y además 
 Los métodos altura(), nivel(T) y ancho() se resolverán en el ejercicio 3.
 Analice la implementación en JAVA de la clase GeneralTree brindada por la cátedra. */
 
-package Practica3.Ejercicio1y3;
+package Practica3.Ejercicio1y3y5;
 
 import Practica1.Ejercicio8.Queue;
 import java.util.LinkedList;
@@ -201,6 +201,58 @@ se encuentran en el nivel que posee la mayor cantidad de nodos. */
             }
         }
         return cantMax;
+    }
+    
+    
+/* Ejercicio 5
+Se dice que un nodo n es ancestro de un nodo m si existe un camino desde n a m. Implemente un
+método en la clase GeneralTree con la siguiente firma:
+public boolean esAncestro(T a, T b): devuelve true si el valor “a” es ancestro del valor “b”. */
+    
+    public boolean esAncestro(T a, T b) {
+        if (this.isEmpty()) return false;
+        else return esAncestroBusqueda(a, b);
+    }
+    
+    private boolean esAncestroBusqueda(T a, T b) {
+        boolean res = false;
+        GeneralTree<T> nodoRaiz = null;
+        GeneralTree<T> ab;
+        Queue<GeneralTree<T>> cola = new Queue<GeneralTree<T>>();
+        cola.enqueue(this);
+        while(!cola.isEmpty() && (!res)) {
+            ab = cola.dequeue();
+            if(ab.getData().equals(b) && (!res)) return false; //Encontre B antes que A
+            if(ab.getData().equals(a)) {
+                res = true;
+                nodoRaiz = ab;
+            }
+            if(!res) {
+                List<GeneralTree<T>> children = ab.getChildren();
+                for(GeneralTree<T> child: children) {
+                        cola.enqueue(child);
+                    }
+                }
+        }
+        return res ? esAncestroHelper(nodoRaiz, b): false; 
+    }
+    
+    private boolean esAncestroHelper(GeneralTree<T> ab, T b) {
+        GeneralTree<T> aux;
+        Queue<GeneralTree<T>> queue = new Queue<GeneralTree<T>>();
+        queue.enqueue(ab);
+        while(!queue.isEmpty()) {
+            aux = queue.dequeue();
+            if(aux.getData().equals(b)) {
+                return true;
+            } else {
+                List<GeneralTree<T>> children = aux.getChildren();
+                for (GeneralTree<T> child: children) {
+                    queue.enqueue(child);
+                }
+            }
+        }
+        return false;
     }
 }
 

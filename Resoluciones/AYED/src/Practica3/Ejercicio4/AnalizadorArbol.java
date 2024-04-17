@@ -17,7 +17,7 @@ interna representada con int. */
 package Practica3.Ejercicio4;
 
 import Practica1.Ejercicio8.Queue;
-import Practica3.Ejercicio1y3.GeneralTree;
+import Practica3.Ejercicio1y3y5.GeneralTree;
 import java.util.LinkedList;
 import java.util.List;
 

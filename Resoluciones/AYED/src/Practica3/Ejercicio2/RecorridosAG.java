@@ -20,7 +20,7 @@ pasados como parámetros, recorrido por niveles. */
 package Practica3.Ejercicio2;
 
 import java.util.*;
-import Practica3.Ejercicio1y3.GeneralTree;
+import Practica3.Ejercicio1y3y5.GeneralTree;
 import Practica1.Ejercicio8.Queue;
 
 public class RecorridosAG {
@@ -116,6 +116,10 @@ public class RecorridosAG {
         
         System.out.println("AlturaMax=" + a.altura());
         System.out.println("Ancho=" + a.ancho());
+        System.out.println("ES ANCESTRO 11 DE 2:" + a.esAncestro(11, 2));
+        System.out.println("ES ANCESTRO 2 DE 11:" + a.esAncestro(2, 11));
+        System.out.println("ES ANCESTRO 11 DE 21:" + a.esAncestro(11, 21));
+        System.out.println("ES ANCESTRO 21 DE 11:" + a.esAncestro(21, 11));
         
         RecorridosAG rec = new RecorridosAG();
         
@@ -123,6 +127,9 @@ public class RecorridosAG {
         System.out.println("INORDEN:" + rec.numerosImparesMayoresQueInOrden(a, 0));
         System.out.println("POSTORDEN:" + rec.numerosImparesMayoresQuePostOrden(a, 0));
         System.out.println("POR NIVELES:" + rec.numerosImparesMayoresQuePorNiveles(a, 0));
+        
+        
+        
  }
 
 }
