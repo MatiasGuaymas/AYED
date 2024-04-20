@@ -156,8 +156,7 @@ c) public int ancho(): int la amplitud (ancho) de un árbol se define como la ca
 se encuentran en el nivel que posee la mayor cantidad de nodos. */    
     
     public int altura() {
-        if(this.isEmpty()) return -1;
-        else return (!this.isLeaf()) ? alturaHelper() : 0;
+        return (!this.isEmpty()) ? alturaHelper() : -1;
     }
     
     private int alturaHelper() {
