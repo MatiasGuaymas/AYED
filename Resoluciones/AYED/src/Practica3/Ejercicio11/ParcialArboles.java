@@ -17,6 +17,7 @@ public class ParcialArboles {
         else return (!arbol.isLeaf()) ? resolverHelper(arbol) : true;
     }
     
+    /* Antiguamente era asi, pero hay una manera mucho mas facil de resolverlo, en vez de encolar NULLS para separar, directamente no hacerlo, y preguntar por el cola.size y actualizar 
     private static boolean resolverHelper(GeneralTree<Integer> arbol) {
         int cantActual = 0;
         int nivel = 1;
@@ -41,6 +42,30 @@ public class ParcialArboles {
                 cantActual = 0;
                 cola.enqueue(null);
             } 
+        }
+        return true;
+    } */
+    
+    private static boolean resolverHelper(GeneralTree<Integer> tree){
+        int cantActual = 1;
+        int nodosAnt = 0;
+        GeneralTree<Integer> ab;
+        Queue<GeneralTree<Integer>> cola = new Queue<GeneralTree<Integer>>();
+        cola.enqueue(tree);
+        while(!cola.isEmpty()){
+            if(cantActual != nodosAnt + 1){
+                return false;
+            }
+            else {
+                for(int i = 0; i < cantActual ; i++){
+                    ab = cola.dequeue();
+                    for(GeneralTree<Integer> child : ab.getChildren()){
+                        cola.enqueue(child);
+                    }
+                }
+            }
+            nodosAnt = cantActual;
+            cantActual = cola.size();
         }
         return true;
     }
@@ -115,7 +140,7 @@ public class ParcialArboles {
         arbol4.add(new GeneralTree<Integer>(19));
         GeneralTree<Integer> a4 = new GeneralTree<Integer>(2, arbol4);
         
-        System.out.println("Es creciente el arbol 4: " + resolver(a4)); //Me devolvia true porque la cola se vacio justo en el null y no llega a evaluar el else if y sale del while, retornando true
+        System.out.println("Es creciente el arbol 4: " + resolver(a4)); //Me devolvia true porque la cola se vacio justo en el null y no llega a evaluar el else if y sale del while, retornando true (en mi primera resolucion)
         
         List <GeneralTree<Integer>> subArb1 = new LinkedList <GeneralTree<Integer>>();
         subArb1.add(new GeneralTree<Integer>(1));

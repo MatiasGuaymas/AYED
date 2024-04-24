@@ -21,13 +21,10 @@ public class Navidad {
     }
     
     private boolean isAbeto(GeneralTree<Integer> ab) {
-        if(ab.isLeaf()) {
-            return true;
-        }
         int nodosHoja = 0;
         for(GeneralTree<Integer> h: ab.getChildren()) {
             if(h.isLeaf()) nodosHoja++;
-            if(!isAbeto(h)) return false;
+            else if(!isAbeto(h)) return false;
         }
         return nodosHoja >= 3;
     }

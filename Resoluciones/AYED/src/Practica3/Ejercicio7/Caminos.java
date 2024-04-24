@@ -30,13 +30,13 @@ public class Caminos {
         camAct.add(a.getData());
         if(!a.isLeaf()) {
             for(GeneralTree<Integer>h: a.getChildren()) {
-                caminoHelper(h, camAct, camMax);
-                camAct.remove(camAct.size()-1);
+                caminoHelper(h, camAct, camMax); 
             }
         } else if(camAct.size() > camMax.size()) {
             camMax.removeAll(camMax);
             camMax.addAll(camAct);
         }
+        camAct.remove(camAct.size()-1);
     }
     
     public static void main(String[] args) {

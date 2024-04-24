@@ -171,7 +171,33 @@ se encuentran en el nivel que posee la mayor cantidad de nodos. */
         }
     }
     
-//Falta B) Nivel   
+    public int nivel(T dato) {
+        return (!this.isEmpty()) ? nivelHelper(dato) : -1;
+    }
+    
+    private int nivelHelper(T dato){
+        int cont = 0;
+        int act;
+        GeneralTree<T> aux;
+        Queue<GeneralTree<T>> cola = new Queue<>();
+        cola.enqueue(this);
+        while(!cola.isEmpty()){
+            act = cola.size();
+            for(int i = 0; i < act; ++i){
+                aux = cola.dequeue();
+                if(aux.getData().equals(dato)){
+                    return cont;
+                }
+                else{
+                    for(GeneralTree<T> child : aux.getChildren()){
+                        cola.enqueue(child);
+                    }
+                }
+            }
+            cont++;
+        }
+        return -1;
+    }
     
     public int ancho(){ 
         if(this.isEmpty()) return 0;

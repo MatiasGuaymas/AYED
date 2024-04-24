@@ -115,6 +115,9 @@ public class RecorridosAG {
         GeneralTree<Integer> a = new GeneralTree<Integer>(11, childen);
         
         System.out.println("AlturaMax=" + a.altura());
+        System.out.println("En que nivel esta el num 11? Nivel:" + a.nivel(11));
+        System.out.println("En que nivel esta el num 3? Nivel:" + a.nivel(3));
+        System.out.println("En que nivel esta el num 21? Nivel:" + a.nivel(21));
         System.out.println("Ancho=" + a.ancho());
         System.out.println("ES ANCESTRO 11 DE 2:" + a.esAncestro(11, 2));
         System.out.println("ES ANCESTRO 2 DE 11:" + a.esAncestro(2, 11));
@@ -126,10 +129,7 @@ public class RecorridosAG {
         System.out.println("PREORDEN:" + rec.numerosImparesMayoresQuePreOrden(a, 0));
         System.out.println("INORDEN:" + rec.numerosImparesMayoresQueInOrden(a, 0));
         System.out.println("POSTORDEN:" + rec.numerosImparesMayoresQuePostOrden(a, 0));
-        System.out.println("POR NIVELES:" + rec.numerosImparesMayoresQuePorNiveles(a, 0));
-        
-        
-        
+        System.out.println("POR NIVELES:" + rec.numerosImparesMayoresQuePorNiveles(a, 0));        
  }
 
 }
