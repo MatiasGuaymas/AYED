@@ -36,7 +36,7 @@ public class ParcialArboles {
         }
         if(!arbol.isLeaf()) {
             for(GeneralTree<Integer>h: arbol.getChildren()) {
-                resolver(h, camAct, camMax, max, valorTotal, nivel++);
+                resolver(h, camAct, camMax, max, valorTotal, nivel+1);
             }
         } else if (valorTotal > max.getMax()) {
             max.setMax(valorTotal);
