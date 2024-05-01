@@ -7,9 +7,11 @@ Un árbol general es de selección si cada nodo tiene en su raíz el valor del m
 package Practica3.Ejercicio9;
 
 import Practica3.Ejercicio1y3y5.GeneralTree;
+import Practica1.Ejercicio8.Queue;
 import java.util.*;
 
 public class ParcialArboles {
+    /* Solucion ineficiente: hacerlo de manera recursiva, provoca mas uso de memoria. Es mejor resolver este punto de manera iterativa, de igual manera cumple con lo solicitado.
     public static boolean esDeSeleccion (GeneralTree<Integer> arbol) {
         return (!arbol.isEmpty()) ? esDeSeleccionHelper(arbol) : false;
     }
@@ -29,6 +31,24 @@ public class ParcialArboles {
             }
             return ((min.equals(arbol.getData())) && (ok));
         }
+    } */
+    
+    public static boolean esDeSeleccion(GeneralTree<Integer> arbol) {
+        Queue<GeneralTree<Integer>> q = new Queue<GeneralTree<Integer>>();
+        boolean ok = true; //Se considera que un arbol vacio devolvera true
+        if(!arbol.isEmpty()) {
+            q.enqueue(arbol);
+            while(!q.isEmpty() && ok) {
+                GeneralTree<Integer> aux = q.dequeue();
+                int min = Integer.MAX_VALUE;
+                for (GeneralTree<Integer> h: aux.getChildren()) {
+                    q.enqueue(h);
+                    min = Math.min(min, h.getData());
+                }
+                if(!aux.isLeaf() && aux.getData() != min) ok = false;
+            }
+        }
+        return ok;
     }
     
     public static void main(String[] args) {
