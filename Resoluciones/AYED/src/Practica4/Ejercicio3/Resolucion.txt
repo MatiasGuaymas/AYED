@@ -1,0 +1,9 @@
+Ejercicio 3
+En la documentación de la clase arrayList que se encuentra en el siguiente link
+https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html Se encuentran las siguientes afirmaciones
+•	"The size, isEmpty, get, set, iterator, and listIterator operations run in constant time.”
+•	 “All of the other operations run-in linear time (roughly speaking)”
+Explique con sus palabras por qué cree que algunas operaciones se ejecutan en tiempo constante y otras en tiempo lineal.
+
+Algunas operaciones se ejecutan en tiempo constante ya que no implican iniciar un recorrido del arreglo de n elementos, sino simplemente: hacer asignaciones, acceder a una posición concreta de este (O(1): acceder a un valor de un arreglo por medio de un índice, es de orden constante), como también agregar o quitar elementos al final de la estructura, entre otras.
+En cambio, la búsqueda de algún elemento en el arrayList, añadir o eliminar elementos en una posición específica, si requieren de un tiempo lineal, ya que es necesario iniciar un recorrido para hallar el elemento o desplazar los elementos para la operación solicitada. Por lo tanto, la complejidad temporal de esta operación es lineal en función del tamaño de la lista.

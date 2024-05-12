@@ -1,0 +1,14 @@
+Ejercicio 1
+a.- Para que usted pueda experimentar el tiempo que demora cada uno de los dos algoritmos en forma empírica, usted debe ejecutar cada uno de ellos, con distintas cantidades de elementos y completar la tabla. Luego haga la gráfica para comparar los tiempos de ambos algoritmos. Tenga en cuenta que el algoritmo posee dos constantes CANTIDAD_CUENTAS y CANTIDAD_CONSULTAS, sin embargo, por simplicidad, ambas toman el mismo valor. Sólo necesita modificar CANTIDAD_CUENTAS.
+Nº Cuentas (y consultas) 	procesarMovimientos 	procesarMovimientosOptimizado
+1.000					0,024			0,001
+10.000					0,659			0,007
+25.000					3,503			0,016
+50.000					12,479			0,027
+100.000					47,676			0,032
+
+b.- ¿Por qué procesarMovimientos es tan ineficiente? Tenga en cuenta que pueden existir millones de movimientos diarios que abarquen gran parte de las cuentas bancarias.
+El método tiene una complejidad temporal de O(N * M), donde N es la cantidad de consultas y M es el promedio del tamaño de los rangos de cuentas afectadas por cada consulta, y en el caso que haya muchas consultas o los rangos sean grandes, este algoritmo sería totalmente ineficiente.
+Además, el algoritmo posee bucles anidados, que aumentan la complejidad de este y pueden hacerlo más difícil de entender, como también un gran uso de los recursos a la hora de iterar sobre el arreglo de cuentas.
+c.- ¿En qué se diferencia procesarMovimientosOptimizado? Observe las operaciones que se realizan para cada consulta.
+La diferencia principal entre ambos algoritmos es que, en el optimizado, se hace un único recorrido tanto en el arreglo de consultas como el de cuentas. Esto es así, gracias a la ayuda de un arreglo auxiliar previamente creado en donde se registran los cambios que deben aplicarse a las cuentas (en el anterior algoritmo, los cambios se realizaban directamente dentro del bucle anidado), para luego recorrerlo y actualizar las cuentas sumando sus valores correspondientes.

@@ -1,0 +1,11 @@
+Ejercicio 2
+La clase BuscadorEnArrayOrdenado del material adicional (Ejercicio 2 - Tiempo.zip) resuelve el problema de buscar un elemento dentro de un array ordenado. El mismo problema, lo resuelve de dos maneras diferentes: búsqueda lineal y búsqueda dicotómica.
+Se define la variable cantidadElementos, la cual debe ir modificando para determinar una escala (por ejemplo, de a 100.000 o 1.000.000, dependiendo de la capacidad de cada equipo) y realice una tabla del tiempo que tardan en ejecutar ambos algoritmos. Por ejemplo:
+
+N 	Lineal 				Dicotómica
+100.000	iteraciones=100000, tiempo=1	iteraciones=16, tiempo=0
+200.000	iteraciones=200000, tiempo=2	iteraciones=17, tiempo=0
+300.000	iteraciones=300000, tiempo=2	iteraciones=18, tiempo=0
+400.000	iteraciones=400000, tiempo=3	iteraciones=18, tiempo=0
+500.000	iteraciones=500000, tiempo=3	iteraciones=18, tiempo=0
+600.000	iteraciones=600000, tiempo=4	iteraciones=19, tiempo=0
