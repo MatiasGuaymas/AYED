@@ -25,4 +25,8 @@ public class Jubilado {
         this.domicilio = domicilio;
     }
     
+    public String toString() {
+        return this.nombre;
+    }
+    
 }

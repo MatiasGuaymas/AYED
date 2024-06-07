@@ -73,7 +73,7 @@ public class Mapa {
         if(!encontre) {
             camino.remove(camino.size()-1); //marcas[origen.getPosition()] = false; Cuando haya encontrado el camino hacia destino, deja marcadas las posiciones del vector de marcas
         }
-        marcas[origen.getPosition()] = false; //Deja desmarcadas todas las posiciones del vector de marcas
+        marcas[origen.getPosition()] = false; //Deja desmarcadas todas las posiciones del vector de marcas: no es necesario desmarcar en este ejemplo.
         return encontre;
     }
     

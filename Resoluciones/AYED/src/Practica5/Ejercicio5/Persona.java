@@ -48,4 +48,5 @@ public class Persona {
     public boolean cumple() {
         return this.tipo.equals("Jubilado") && !this.cobro;
     }
+    
 }
