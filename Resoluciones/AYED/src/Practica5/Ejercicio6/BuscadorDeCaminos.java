@@ -72,6 +72,27 @@ public class BuscadorDeCaminos {
         camAct.remove(camAct.size()-1);
     }
     
+    public static int fun1 (int n) {
+           int i, j, k, p, q = 0;
+        
+           // This loop runs Θ(n) time
+           for (i = 1; i < n; ++i)
+           {
+              p = 0;
+        
+              // This loop runs Θ(Log n) times.
+              for (j=n; j > 1; j=j/2)
+                 ++p;
+             
+              // Since above loop runs Θ(Log n) times, p = Θ(Log n)
+              // This loop runs Θ(Log p) times which loglogn
+              for (k=1; k < p; k=k*2)
+                 ++q;
+           
+           }
+           return q;
+        }
+    
     public static void main (String[] args) {
         Graph<String> bosque = new AdjListGraph<String>();
         Vertex<String> v1 = bosque.createVertex("Casa Caperucita");
@@ -108,5 +129,13 @@ public class BuscadorDeCaminos {
         for(List<String> l: lis) {
             System.out.println(l);
         }
+        
+        System.out.println(fun1(8));
+        System.out.println(fun1(16));
+        System.out.println(fun1(4));
+        System.out.println(fun1(24));
+        System.out.println(fun1(31));
+        System.out.println(fun1(13));
+
     }
 }
