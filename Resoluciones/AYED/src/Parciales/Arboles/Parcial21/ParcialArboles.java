@@ -17,6 +17,99 @@ public class ParcialArboles {
         if(!this.arb.isEmpty()) {
             Queue<GeneralTree<Integer>> cola = new Queue<GeneralTree<Integer>>();
             cola.enqueue(this.arb);
+            cola.enqueue(null);
+            boolean ok = false;
+            boolean cumpleNivel = true;
+            while(!cola.isEmpty() && !ok) {
+                GeneralTree<Integer> aux = cola.dequeue();
+                if(aux != null) {
+                    lis.add(aux.getData());
+                    List<GeneralTree<Integer>> children = aux.getChildren();
+                    if(children.size() < num) {
+                        cumpleNivel = false;
+                    }
+                    for(GeneralTree<Integer> h: children) {
+                        cola.enqueue(h);
+                    }
+                } else { 
+                    if(!cola.isEmpty()) {
+                        cola.enqueue(null);
+                    }
+                    if(!cumpleNivel) {
+                        lis.clear();
+                        cumpleNivel = true;
+                    } else {
+                        ok = true;
+                    }
+                }
+            }
+        }
+        return lis;
+    }
+    
+    public List<Integer> nivelParcialMejorado(int num) {
+        List<Integer> lis = new LinkedList<Integer>();
+        if(!this.arb.isEmpty()) {
+            Queue<GeneralTree<Integer>> cola = new Queue<GeneralTree<Integer>>();
+            cola.enqueue(this.arb);
+            boolean ok = false;
+            boolean cumpleNivel = true;
+            while(!cola.isEmpty() && !ok) {
+                int size = cola.size();
+                for(int i=0; i < size; i++) {
+                    GeneralTree<Integer> aux = cola.dequeue();
+                    List<GeneralTree<Integer>> children = aux.getChildren();
+                    lis.add(aux.getData());
+                    if(children.size() < num) {
+                        cumpleNivel = false;
+                    }
+                    for(GeneralTree<Integer> h: children) {
+                        cola.enqueue(h);
+                    }
+                }
+                if(!cumpleNivel) {
+                    lis.clear();
+                    cumpleNivel = true;
+                } else {
+                    ok = true;
+                }
+            }
+        }
+        return lis;
+    }
+    
+    public List<Integer> nivelParcial(int num) {
+        List<Integer> lis = new LinkedList<Integer>();
+        if(!this.arb.isEmpty()) {
+            Queue<GeneralTree<Integer>> cola = new Queue<GeneralTree<Integer>>();
+            cola.enqueue(this.arb);
+            boolean ok = false;
+            while(!cola.isEmpty() && !ok) {
+                int size = cola.size();
+                int cant = 0;
+                for(int i=0; i < size; i++) {
+                    GeneralTree<Integer> aux = cola.dequeue();
+                    List<GeneralTree<Integer>> children = aux.getChildren();
+                    if(children.size() >= num) {
+                        lis.add(aux.getData());
+                        cant++;
+                    }
+                    for(GeneralTree<Integer> h: children) {
+                            cola.enqueue(h);
+                    }
+                }
+                ok = cant == size;
+                if(!ok) lis.clear();
+            }
+        }
+        return lis;
+    }
+    
+    /* public List<Integer> nivel(int num) {
+        List<Integer> lis = new LinkedList<Integer>();
+        if(!this.arb.isEmpty()) {
+            Queue<GeneralTree<Integer>> cola = new Queue<GeneralTree<Integer>>();
+            cola.enqueue(this.arb);
             boolean ok = false;
             while(!cola.isEmpty() && !ok) {
                 int size = cola.size();
@@ -35,7 +128,7 @@ public class ParcialArboles {
             }
         }
         return lis;
-    }
+    } */
     
     public static void main(String[] args) {
         List<GeneralTree<Integer>> children1 = new LinkedList<GeneralTree<Integer>>();
@@ -74,6 +167,12 @@ public class ParcialArboles {
         
         System.out.println(p.nivel(3));
         System.out.println(p.nivel(4));
+        
+        System.out.println(p.nivelParcial(3));
+        System.out.println(p.nivelParcial(4));
+        
+        System.out.println(p.nivelParcialMejorado(3));
+        System.out.println(p.nivelParcialMejorado(4));
     }
     
 }

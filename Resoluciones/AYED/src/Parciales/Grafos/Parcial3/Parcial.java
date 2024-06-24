@@ -11,7 +11,7 @@ public class Parcial {
         if(!sitios.isEmpty()) {
             Vertex<Ciudad> v = this.buscar(sitios);
             if(v != null && v.getData().getTiempo() <= tiempo) {
-                ok = this.bfs(sitios, v, tiempo - v.getData().getTiempo(), new boolean[sitios.getSize()]);
+                ok = this.dfs(sitios, v, new Objeto(tiempo - v.getData().getTiempo()), new boolean[sitios.getSize()], sitios.getSize());
             }
         }
         return ok ? "Alcanzable" : "No Alcanzable";
@@ -30,29 +30,24 @@ public class Parcial {
         return entrada;
     }
     
-    private boolean bfs(Graph<Ciudad> sitios, Vertex<Ciudad> origen, int tiempo, boolean[] marcas) {
-        Queue<Vertex<Ciudad>> q = new Queue<Vertex<Ciudad>>();
-        q.enqueue(origen);
+    private boolean dfs(Graph<Ciudad> sitios, Vertex<Ciudad> origen, Objeto obj, boolean[] marcas, int max) {
         marcas[origen.getPosition()] = true;
-        while (!q.isEmpty() && tiempo >= 0) {
-            Vertex<Ciudad> aux = q.dequeue();
-            for (Edge<Ciudad> ady: sitios.getEdges(aux)) { //Deberia usar un for each y no un iterator, porque podria no llegar por un camino a algun lugar, pero si mediante otro. No seria correcto frenar el bucle por dicho motivo.
+        boolean termine = false;
+        if(obj.getCantNodos() == max) {
+            return true;
+        } else {
+            Iterator<Edge<Ciudad>> it = sitios.getEdges(origen).iterator();
+            while(it.hasNext() && !termine) {
+                Edge<Ciudad> ady = it.next();
                 Vertex<Ciudad> destino = ady.getTarget();
-                int tiempoDestinoCamino = ady.getWeight() + destino.getData().getTiempo();
-                if(!marcas[destino.getPosition()] && tiempo - tiempoDestinoCamino >= 0) {
-                    marcas[destino.getPosition()] = true;
-                    q.enqueue(destino);
-                    tiempo-= tiempoDestinoCamino;
+                int peso = ady.getWeight() + destino.getData().getTiempo();
+                if(!marcas[destino.getPosition()] && peso <= obj.getTiempo()) {
+                    obj.actualizar(peso);
+                    termine = this.dfs(sitios, destino, obj, marcas, max);
                 }
             }
         }
-        boolean cumple = true;
-        int i = 0;
-        while(i < marcas.length && cumple) {
-            if(!marcas[i]) cumple = false;
-            i++;
-        } 
-        return cumple;
+        return termine;
     }
     
     public static void main(String args[]) {
@@ -68,8 +63,8 @@ public class Parcial {
         
         grafo.connect(Entrada, Cebras, 10);
         grafo.connect(Cebras, Entrada, 10);
-        grafo.connect(Entrada, Tigres, 10);
-        grafo.connect(Tigres, Entrada, 10);
+        grafo.connect(Entrada, Tigres, 15);
+        grafo.connect(Tigres, Entrada, 15);
         grafo.connect(Entrada, Murcielagos, 20);
         grafo.connect(Murcielagos, Entrada, 20);
         grafo.connect(Entrada, Flamencos, 25);
@@ -77,8 +72,8 @@ public class Parcial {
         
         grafo.connect(Tigres, Cebras, 8);
         grafo.connect(Cebras, Tigres, 8);
-        grafo.connect(Cebras, Tortugas, 10);
-        grafo.connect(Tortugas, Cebras, 10);
+        grafo.connect(Cebras, Tortugas, 5);
+        grafo.connect(Tortugas, Cebras, 5);
         grafo.connect(Flamencos, Murcielagos, 25);
         grafo.connect(Murcielagos, Flamencos, 25);
         grafo.connect(Murcielagos, Wallabies, 10);
@@ -94,6 +89,7 @@ public class Parcial {
         
         System.out.println(p.resolver(grafo, 220));
         System.out.println(p.resolver(grafo, 205));
+        System.out.println(p.resolver(grafo, 195));
         System.out.println(p.resolver(grafo, 100));
     }
 }
