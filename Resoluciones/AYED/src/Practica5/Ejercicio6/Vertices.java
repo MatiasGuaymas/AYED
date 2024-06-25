@@ -1,6 +1,6 @@
 package Practica5.Ejercicio6;
 
-import Practica5.Ejercicio1.Vertex;
+import Practica5.Ejercicio1.*;
 
 public class Vertices {
     private Vertex<String> verOrigen;
