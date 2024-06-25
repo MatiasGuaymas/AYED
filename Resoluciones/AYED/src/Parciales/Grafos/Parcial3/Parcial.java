@@ -1,6 +1,5 @@
 package Parciales.Grafos.Parcial3;
 
-import Practica1.Ejercicio8.Queue;
 import Practica5.Ejercicio1.*;
 import java.util.*;
 
@@ -11,7 +10,7 @@ public class Parcial {
         if(!sitios.isEmpty()) {
             Vertex<Ciudad> v = this.buscar(sitios);
             if(v != null && v.getData().getTiempo() <= tiempo) {
-                ok = this.dfs(sitios, v, new Objeto(tiempo - v.getData().getTiempo()), new boolean[sitios.getSize()], sitios.getSize());
+                ok = this.dfs(sitios, v, tiempo - v.getData().getTiempo(), 1, new boolean[sitios.getSize()], sitios.getSize());
             }
         }
         return ok ? "Alcanzable" : "No Alcanzable";
@@ -30,10 +29,10 @@ public class Parcial {
         return entrada;
     }
     
-    private boolean dfs(Graph<Ciudad> sitios, Vertex<Ciudad> origen, Objeto obj, boolean[] marcas, int max) {
+    private boolean dfs(Graph<Ciudad> sitios, Vertex<Ciudad> origen, int tiempo, int cant, boolean[] marcas, int max) {
         marcas[origen.getPosition()] = true;
         boolean termine = false;
-        if(obj.getCantNodos() == max) {
+        if(cant == max) {
             return true;
         } else {
             Iterator<Edge<Ciudad>> it = sitios.getEdges(origen).iterator();
@@ -41,12 +40,12 @@ public class Parcial {
                 Edge<Ciudad> ady = it.next();
                 Vertex<Ciudad> destino = ady.getTarget();
                 int peso = ady.getWeight() + destino.getData().getTiempo();
-                if(!marcas[destino.getPosition()] && peso <= obj.getTiempo()) {
-                    obj.actualizar(peso);
-                    termine = this.dfs(sitios, destino, obj, marcas, max);
+                if(!marcas[destino.getPosition()] && peso <= tiempo) {
+                    termine = this.dfs(sitios, destino, tiempo - peso, cant+1, marcas, max);
                 }
             }
         }
+        marcas[origen.getPosition()] = false;
         return termine;
     }
     

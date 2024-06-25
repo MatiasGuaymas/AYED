@@ -7,6 +7,7 @@ public class Parcial {
     public List<ListasCuadras> resolver(Graph<String> sitios, String origen, String destino, List<String> evitarPasarPor) {
         List<ListasCuadras> lis = new LinkedList<ListasCuadras>();
         if(!sitios.isEmpty()) {
+            //Se debe mejorar, se deberia hacer un unico search que devuelva una clase con ambos vertices
             Vertex v1 = sitios.search(origen);
             Vertex v2 = sitios.search(destino);
             List<String> lisAct = new LinkedList<String>();
@@ -34,7 +35,6 @@ public class Parcial {
         if(origen == destino) {
             ListasCuadras l = new ListasCuadras(new LinkedList(lisActual), cuadras);
             lis.add(l);
-            marcas[destino.getPosition()] = false;
         } else {
             for(Edge<String> a : sitios.getEdges(origen)) {
                 Vertex<String> aux = a.getTarget();
@@ -44,6 +44,7 @@ public class Parcial {
                 }
             }
         }
+        marcas[destino.getPosition()] = false;
         lisActual.remove(lisActual.size()-1);
     }
     
