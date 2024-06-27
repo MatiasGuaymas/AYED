@@ -9,7 +9,7 @@ public class Parcial {
         if(!sitios.isEmpty()) {
             Vertex<Ciudad> v = this.buscar(sitios);
             if(v != null && v.getData().getTiempo() <= tiempo) {
-                cant = this.dfs(sitios, v, tiempo - v.getData().getTiempo(), 1, new boolean[sitios.getSize()]);
+                cant = this.dfs(sitios, v, tiempo - v.getData().getTiempo(), 1, new boolean[sitios.getSize()], -1);
             }
         } 
         return cant;
@@ -28,18 +28,18 @@ public class Parcial {
         return entrada;
     }
     
-    private int dfs(Graph<Ciudad> sitios, Vertex<Ciudad> origen, int tiempo, int cantVisitados, boolean[] marcas) {
+    private int dfs(Graph<Ciudad> sitios, Vertex<Ciudad> origen, int tiempo, int cantVisitados, boolean[] marcas, int max) {
         marcas[origen.getPosition()] = true;
-        int maxVisitados = cantVisitados;
         for(Edge<Ciudad> a: sitios.getEdges(origen)) {
             Vertex<Ciudad> destino = a.getTarget();
             int tiempoDestinoLugar = a.getWeight() + destino.getData().getTiempo();
             if(!marcas[destino.getPosition()] && tiempoDestinoLugar <= tiempo) {
-                maxVisitados = Math.max(maxVisitados , this.dfs(sitios, destino, tiempo - tiempoDestinoLugar, cantVisitados+1, marcas));
+                max = this.dfs(sitios, destino, tiempo - tiempoDestinoLugar, cantVisitados+1, marcas, max);
             }
         }
+        if(cantVisitados > max) max = cantVisitados;
         marcas[origen.getPosition()] = false;
-        return maxVisitados;
+        return max;
     }
     
     public static void main(String args[]) {
