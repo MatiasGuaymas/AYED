@@ -1,5 +1,4 @@
-3er Semestre\AYED\Practicas\Resoluciones\AYED\nbproject
-3er Semestre\AYED\Practicas\Resoluciones\AYED\build
-3er Semestre\AYED\Practicas\Resoluciones\AYED\test
-3er Semestre\AYED\Practicas\Resoluciones\AYED\build.xml
-3er Semestre\AYED\Practicas\Resoluciones\AYED\manifest.mf
+build.xml
+manifest.mf
+build/
+nbproject/
