@@ -6,14 +6,13 @@ import java.util.*;
 
 public class Parcial {
     public Objeto nivelPopularidad(Graph<String> red, String usuario, int distancia, int umbral) {
-        //Objeto obj = new Objeto(); //PRIMER ERROR: ESTO NO ES IGUAL A NULL
         Objeto obj = null;
         if(!red.isEmpty()) {
             Vertex<String> origen = red.search(usuario);
             if(origen!=null) {
                 obj = new Objeto();
                 this.bfs(red, origen, obj, distancia); 
-                obj.setPopular(obj.getCant() >= umbral); //SEGUNDO ERROR: NO PONGO EL GETTER EN LA CLASE
+                obj.setPopular(obj.getCant() >= umbral);
             } 
         }
         return obj;
@@ -35,7 +34,7 @@ public class Parcial {
                     int j = v.getPosition();
                     if(!marcas[j]) {
                         marcas[j] = true;
-                        if(grado + 1 == distancia) cant++; //TERCER ERROR: COMPARO CON = Y NO CON ==
+                        if(grado + 1 == distancia) cant++;
                         else cola.enqueue(v);
                     }
                 }

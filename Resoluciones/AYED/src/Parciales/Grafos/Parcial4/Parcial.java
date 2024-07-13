@@ -4,48 +4,59 @@ import java.util.*;
 import Practica5.Ejercicio1.*;
 
 public class Parcial {
-    public List<ListasCuadras> resolver(Graph<String> sitios, String origen, String destino, List<String> evitarPasarPor) {
-        List<ListasCuadras> lis = new LinkedList<ListasCuadras>();
+    public List<Camino> resolver(Graph<String> sitios, String origen, String destino, List<String> evitarPasarPor) {
+        List<Camino> lis = new LinkedList<Camino>();
         if(!sitios.isEmpty()) {
-            //Se debe mejorar, se deberia hacer un unico search que devuelva una clase con ambos vertices
-            Vertex v1 = sitios.search(origen);
-            Vertex v2 = sitios.search(destino);
-            List<String> lisAct = new LinkedList<String>();
-            if(v1 != null && v2 != null) {
+            Vertices v = this.buscar(sitios, origen, destino);
+            if(v != null) {
                 boolean [] marcas = new boolean[sitios.getSize()];
-                this.marcarEvitar(sitios, marcas, evitarPasarPor);
-                this.dfs(sitios, lis, lisAct, v1, v2, marcas, 0);
+                this.marcarRestringidos(sitios, marcas, evitarPasarPor);
+                this.dfs(sitios, lis, new LinkedList<String>(), v.getOrigen(), v.getDestino(), 0, marcas);
             }
         }
         return lis;
     }
     
-    private void marcarEvitar(Graph<String> sitios, boolean[] marcas, List<String> evitarPasarPor) {
-        for(String nom: evitarPasarPor) {
-            Vertex<String> v = sitios.search(nom);
-            if(v!= null) {
+    private void marcarRestringidos(Graph<String>sitios, boolean[] marcas, List<String> evitar) {
+        for(String l: evitar) {
+            Vertex<String> v = sitios.search(l);
+            if(v!=null) {
                 marcas[v.getPosition()] = true;
             }
         }
     }
     
-    private void dfs(Graph<String> sitios, List<ListasCuadras> lis, List<String> lisActual, Vertex<String> origen, Vertex<String> destino, boolean[] marcas, int cuadras) {
+    private Vertices buscar(Graph<String> sitios, String origen, String destino) {
+        Vertex<String> v1 = null;
+        Vertex<String> v2 = null;
+        Iterator<Vertex<String>> it = sitios.getVertices().iterator();
+        while(it.hasNext() && (v1 == null || v2 == null)) {
+            Vertex<String> aux = it.next();
+            if(aux.getData().equals(origen)) {
+                v1 = aux;
+            } else if (aux.getData().equals(destino)){
+                v2 = aux;
+            }
+        }
+        return (v1 != null && v2 != null) ? new Vertices(v1, v2) : null;
+    }
+    
+    private void dfs(Graph<String> sitios, List<Camino> lis, List<String> lisActual, Vertex<String> origen, Vertex<String> destino, int cuadras, boolean[] marcas) {
         marcas[origen.getPosition()] = true;
         lisActual.add(origen.getData());
         if(origen == destino) {
-            ListasCuadras l = new ListasCuadras(new LinkedList(lisActual), cuadras);
-            lis.add(l);
+            lis.add(new Camino(new LinkedList<String>(lisActual), cuadras));
         } else {
-            for(Edge<String> a : sitios.getEdges(origen)) {
-                Vertex<String> aux = a.getTarget();
-                int peso = a.getWeight();
-                if(!marcas[aux.getPosition()]) {
-                    this.dfs(sitios, lis, lisActual, aux, destino, marcas, cuadras+peso);
+            for(Edge<String> ady: sitios.getEdges(origen)) {
+                Vertex<String> des = ady.getTarget();
+                int j = des.getPosition();
+                if(!marcas[j]) {
+                    this.dfs(sitios, lis, lisActual, des, destino, cuadras+ady.getWeight(), marcas);
                 }
             }
         }
-        marcas[destino.getPosition()] = false;
         lisActual.remove(lisActual.size()-1);
+        marcas[origen.getPosition()] = false;
     }
     
     public static void main(String args[]) {
@@ -85,9 +96,9 @@ public class Parcial {
         evitarPasarPor.add("MACLA");
         
         Parcial p = new Parcial();
-        List<ListasCuadras> lis = p.resolver(grafo, "Estadio Diego Armando Maradona", "Palacio Campodónico", evitarPasarPor);
+        List<Camino> lis = p.resolver(grafo, "Estadio Diego Armando Maradona", "Palacio Campodónico", evitarPasarPor);
         
-        for(ListasCuadras aux: lis) {
+        for(Camino aux: lis) {
             System.out.println(aux);
         }
     }

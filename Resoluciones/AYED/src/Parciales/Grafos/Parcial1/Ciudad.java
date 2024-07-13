@@ -1,20 +1,20 @@
 package Parciales.Grafos.Parcial1;
 
 public class Ciudad {
-    private int cantDias;
+    private int dias;
     private String nombre;
     
-    public Ciudad (int cant, String nom){
-        this.cantDias = cant;
-        this.nombre = nom;
+    public Ciudad(int dias, String nombre) {
+        this.dias = dias;
+        this.nombre = nombre;
     }
 
-    public int getCantDias() {
-        return cantDias;
+    public int getDias() {
+        return dias;
     }
 
-    public void setCantDias(int cantDias) {
-        this.cantDias = cantDias;
+    public void setDias(int dias) {
+        this.dias = dias;
     }
 
     public String getNombre() {
@@ -24,4 +24,5 @@ public class Ciudad {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+    
 }

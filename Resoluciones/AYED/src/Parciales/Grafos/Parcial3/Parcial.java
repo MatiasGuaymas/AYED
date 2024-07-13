@@ -1,64 +1,67 @@
 package Parciales.Grafos.Parcial3;
 
-import Practica5.Ejercicio1.*;
 import java.util.*;
-
+import Practica5.Ejercicio1.*;
 
 public class Parcial {
-    public String resolver(Graph<Ciudad> sitios, int tiempo) {
+    public String resolver(Graph<Recinto> sitios, int tiempo) {
         boolean ok = false;
         if(!sitios.isEmpty()) {
-            Vertex<Ciudad> v = this.buscar(sitios);
-            if(v != null && v.getData().getTiempo() <= tiempo) {
-                ok = this.dfs(sitios, v, tiempo - v.getData().getTiempo(), 1, new boolean[sitios.getSize()], sitios.getSize());
+            Vertex<Recinto> origen = this.buscar(sitios);
+            if(origen != null) {
+                int peso = origen.getData().getMinutos();
+                if(peso <= tiempo) {
+                    int max = sitios.getSize();
+                    ok = this.dfs(sitios, origen, tiempo - peso, 1, max, new boolean[max]);
+                }
             }
         }
         return ok ? "Alcanzable" : "No Alcanzable";
-    } 
-    
-    private Vertex<Ciudad> buscar(Graph<Ciudad> sitios) {
-        List<Vertex<Ciudad>> lis = sitios.getVertices();
-        Iterator<Vertex<Ciudad>> it = lis.iterator();
-        Vertex<Ciudad> entrada = null;
-        while(it.hasNext() && entrada == null) {
-            Vertex<Ciudad> aux = it.next();
-            if(aux.getData().getRecinto().equals("Entrada")) {
-                entrada = aux;
-            }
-        }
-        return entrada;
     }
     
-    private boolean dfs(Graph<Ciudad> sitios, Vertex<Ciudad> origen, int tiempo, int cant, boolean[] marcas, int max) {
+    private Vertex<Recinto> buscar(Graph<Recinto> sitios) {
+        Vertex<Recinto> rec = null;
+        Iterator<Vertex<Recinto>> it = sitios.getVertices().iterator();
+        while(it.hasNext() && rec == null) {
+            Vertex<Recinto> aux = it.next();
+            if(aux.getData().getNombre().equals("Entrada")) {
+                rec = aux;
+            }
+        }
+        return rec;
+    }
+    
+    private boolean dfs(Graph<Recinto> sitios, Vertex<Recinto> origen, int tiempo, int cant, int max, boolean[] marcas) {
+        boolean encontre = false;
         marcas[origen.getPosition()] = true;
-        boolean termine = false;
         if(cant == max) {
             return true;
         } else {
-            Iterator<Edge<Ciudad>> it = sitios.getEdges(origen).iterator();
-            while(it.hasNext() && !termine) {
-                Edge<Ciudad> ady = it.next();
-                Vertex<Ciudad> destino = ady.getTarget();
-                int peso = ady.getWeight() + destino.getData().getTiempo();
-                if(!marcas[destino.getPosition()] && peso <= tiempo) {
-                    termine = this.dfs(sitios, destino, tiempo - peso, cant+1, marcas, max);
+            Iterator<Edge<Recinto>> it = sitios.getEdges(origen).iterator();
+            while(it.hasNext() && !encontre) {
+                Edge<Recinto> ady = it.next();
+                Vertex<Recinto> destino = ady.getTarget();
+                int peso = destino.getData().getMinutos() + ady.getWeight(); 
+                int j = destino.getPosition();
+                if(!marcas[j] && peso <= tiempo) {
+                    encontre = this.dfs(sitios, destino, tiempo-peso, cant+1, max, marcas);
                 }
             }
         }
         marcas[origen.getPosition()] = false;
-        return termine;
+        return encontre;
     }
     
     public static void main(String args[]) {
-        Graph<Ciudad> grafo = new AdjListGraph<Ciudad>();
-        Vertex<Ciudad> Entrada = grafo.createVertex(new Ciudad("Entrada", 15));
-        Vertex<Ciudad> Cebras = grafo.createVertex(new Ciudad("Cebras", 10));
-        Vertex<Ciudad> Tigres = grafo.createVertex(new Ciudad("Tigres", 10));
-        Vertex<Ciudad> Flamencos = grafo.createVertex(new Ciudad("Flamencos", 10));
-        Vertex<Ciudad> Murcielagos = grafo.createVertex(new Ciudad("Murciélagos", 20));
-        Vertex<Ciudad> Wallabies = grafo.createVertex(new Ciudad("Wallabies", 30));
-        Vertex<Ciudad> Tortugas = grafo.createVertex(new Ciudad("Tortugas", 10));
-        Vertex<Ciudad> Pumas = grafo.createVertex(new Ciudad("Pumas", 10));
+        Graph<Recinto> grafo = new AdjListGraph<Recinto>();
+        Vertex<Recinto> Entrada = grafo.createVertex(new Recinto("Entrada", 15));
+        Vertex<Recinto> Cebras = grafo.createVertex(new Recinto("Cebras", 10));
+        Vertex<Recinto> Tigres = grafo.createVertex(new Recinto("Tigres", 10));
+        Vertex<Recinto> Flamencos = grafo.createVertex(new Recinto("Flamencos", 10));
+        Vertex<Recinto> Murcielagos = grafo.createVertex(new Recinto("Murciélagos", 20));
+        Vertex<Recinto> Wallabies = grafo.createVertex(new Recinto("Wallabies", 30));
+        Vertex<Recinto> Tortugas = grafo.createVertex(new Recinto("Tortugas", 10));
+        Vertex<Recinto> Pumas = grafo.createVertex(new Recinto("Pumas", 10));
         
         grafo.connect(Entrada, Cebras, 10);
         grafo.connect(Cebras, Entrada, 10);

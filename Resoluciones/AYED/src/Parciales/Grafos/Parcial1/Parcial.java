@@ -5,48 +5,50 @@ import java.util.*;
 
 public class Parcial {
     public List<String> resolver(Graph<Ciudad> mapa, String ciudad, int cantDiasVacas) {
-        List<String> camMax = new LinkedList<String>();
+        List<String> lisMax = new LinkedList<String>();
         if(!mapa.isEmpty()) {
-            Vertex<Ciudad> v = this.buscar(mapa, ciudad);
-            if(v!= null && v.getData().getCantDias() <= cantDiasVacas) {
-                this.dfs(mapa, v, cantDiasVacas - v.getData().getCantDias(), new LinkedList<String>(), camMax, new boolean[mapa.getSize()]);
+            Vertex<Ciudad> origen = this.buscar(mapa, ciudad);
+            if(origen != null) {
+                int dias = origen.getData().getDias();
+                if(dias <= cantDiasVacas) {
+                    this.dfs(origen, mapa, cantDiasVacas - dias, lisMax, new LinkedList<String>(), new boolean[mapa.getSize()]);
+                }
             }
         }
-        return camMax;
+        return lisMax;
     }
     
-    private Vertex<Ciudad> buscar(Graph<Ciudad> m,  String ciudad) {
-        List<Vertex<Ciudad>> lis = m.getVertices();
-        Iterator<Vertex<Ciudad>> it = lis.iterator();
+    private Vertex<Ciudad> buscar(Graph<Ciudad> mapa, String ciudad) {
         Vertex<Ciudad> ciu = null;
+        Iterator<Vertex<Ciudad>> it = mapa.getVertices().iterator();
         while(it.hasNext() && ciu == null) {
             Vertex<Ciudad> aux = it.next();
             if(aux.getData().getNombre().equals(ciudad)) {
                 ciu = aux;
             }
-        }
+        } 
         return ciu;
     }
     
-    private void dfs(Graph<Ciudad> mapa, Vertex<Ciudad> origen, int cantAct, List<String> camAct, List<String> camMax, boolean[] marcas) {
+    private void dfs(Vertex<Ciudad> origen, Graph<Ciudad> mapa, int cantDias, List<String> lisMax, List<String> lisActual, boolean[] marcas) {
+        lisActual.add(origen.getData().getNombre());
         marcas[origen.getPosition()] = true;
-        camAct.add(origen.getData().getNombre());
-        if(cantAct == 0) {
-            if(camAct.size() > camMax.size()) {
-                camMax.clear();
-                camMax.addAll(camAct);
+        if(cantDias == 0) {
+            if(lisActual.size() > lisMax.size()) {
+                lisMax.clear();
+                lisMax.addAll(lisActual);
             }
         } else {
-            List<Edge<Ciudad>> ady = mapa.getEdges(origen);
-            for(Edge<Ciudad> d: ady) {
-                Vertex<Ciudad> des = d.getTarget();
-                int j = d.getTarget().getPosition();
-                if(!marcas[j] && cantAct >= d.getTarget().getData().getCantDias()) {
-                    this.dfs(mapa, des, cantAct - des.getData().getCantDias(), camAct, camMax, marcas);
+            for(Edge<Ciudad> ady: mapa.getEdges(origen)) {
+                Vertex<Ciudad> destino = ady.getTarget();
+                int j = destino.getPosition();
+                int peso = destino.getData().getDias();
+                if(!marcas[j] && peso <= cantDias) {
+                    this.dfs(destino, mapa, cantDias-peso, lisMax, lisActual, marcas);
                 }
             }
         }
-        camAct.remove(camAct.size()-1);
+        lisActual.remove(lisActual.size()-1);
         marcas[origen.getPosition()] = false;
     }
     
