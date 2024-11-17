@@ -8,7 +8,6 @@
 * [**Práctica Árboles Generales**](https://github.com/MatiasGuaymas/AYED/tree/main/Resoluciones/AYED/src/Practica3)
 * [**Práctica Tiempos de Ejecución**](https://github.com/MatiasGuaymas/AYED/tree/main/Resoluciones/AYED/src/Practica4)
 * [**Práctica Grafos**](https://github.com/MatiasGuaymas/AYED/tree/main/Resoluciones/AYED/src/Practica5)
-* [**Práctica Grafos**](https://github.com/MatiasGuaymas/AYED/tree/main/Resoluciones/AYED/src/Practica5)
 * [**Parciales Resueltos**](https://github.com/MatiasGuaymas/AYED/tree/main/Resoluciones/AYED/src/Parciales)
 
 ## Ejercitaciones Teóricas [*](https://github.com/MatiasGuaymas/AYED/tree/main/Practicas%20PDF)
